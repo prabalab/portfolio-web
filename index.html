@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+const { useState, useEffect } = React;
+
+// GSAP Zoom-Out Animation Hook
+const useZoomOutAnimation = (ref) => {
+  useEffect(() => {
+    if (ref.current) {
+      gsap.from(ref.current, {
+        scale: 0.8,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+      });
+    }
+  }, [ref]);
+};
+
+const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+const navRef = React.useRef(null);
+
+useZoomOutAnimation(navRef);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  return (
+    <header style={{ 
+      padding: '20px 50px', 
+      display: 'flex', 
+      justifyContent: 'space-between', 
+      alignItems: 'center', 
+      position: 'relative',
+      backgroundColor: '#4682b4', /* Bluish background color */
+      zIndex: 1000, // Corrected `z-index` to `zIndex` without quotes
+     }} ref={navRef}>
+      <h1 style={{ color: '#d0f5f2' }}>My Portfolio</h1> 
+      <nav className="desktop-menu">
+        <a href="#projects" className="desktop_atag">Projects</a>
+        <a href="#skills" className="desktop_atag">Skills</a>
+        <a href="#contact" className="desktop_atag">Contact</a>
+      </nav>
+      <div className="hamburger" onClick={toggleMenu}>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
+        <a href="#projects" onClick={toggleMenu}>Projects</a>
+        <a href="#skills" onClick={toggleMenu}>Skills</a>
+        <a href="#contact" onClick={toggleMenu}>Contact</a>
+      </div>
+    </header>
+  );
+};
+const Hero = () => {
+    
+    const navHero = React.useRef(null);
+    
+    useZoomOutAnimation(navHero);
+  return (
+    <section id="hero" ref={navHero}>
+      <h1>Hello, I'm Prabal Satpathy.</h1>
+      <p>
+
+I am a skilled Web Developer with expertise in building dynamic, responsive, and user-friendly websites using React, PHP, and MySQL. With a passion for creating seamless user experiences, I specialize in crafting custom web solutions that are both functional and visually appealing.
+      </p>
+      <p>
+I excel in developing interactive front-end applications with React, robust back-end systems using PHP, and efficient database designs with MySQL to ensure optimal performance and scalability. My commitment to delivering clean, maintainable code and staying updated with the latest web technologies drives the success of my projects.
+      </p>
+      <p>
+Whether it’s developing an e-commerce platform, a CMS, or a custom web application, I bring a detail-oriented approach to problem-solving and a dedication to delivering quality results.
+
+</p>
+      <a href="#contact">Get in Touch</a>
+    </section>
+  );
+};
+
+const projects = [
+  {
+    title: 'E-commerce website',
+    description: 'A dynamic website built with React, PHP and MySQL.',
+    link: 'http://games.my-style.in/ecom/checkout.php',
+    image: 'img/ecom.jpg', // Replace with actual image URL
+  },
+  {
+    title: 'Admin Ecommerce',
+    description: 'Admin e-commerce platform with PHP and MySql backend. Add, edit, items. Change gellery images',
+    link: 'http://games.my-style.in/ecom/edit_add_product.php',
+    image: 'img/admin_ecom.png', // Replace with actual image URL
+  },
+  {
+    title: 'Portfolio website',
+    description: 'A Dynamic portfolio website in php, mysql, reactjs.',
+    link: 'http://games.my-style.in/ps/web.php?i=1',
+    image: 'img/pfweb.jpg', // Replace with actual image URL
+  },
+  {
+    title: 'Admin Panel of Portfolio',
+    description: 'Admin Panel of portfolio website in php, mysql, reactjs.',
+    link: 'http://games.my-style.in/ps/message.php?i=1',
+    image: 'img/admin_pf.png', // Replace with actual image URL
+  },
+  {
+    title: 'Restaurant',
+    description: 'A Restaurant website with admin panel.',
+    link: 'http://games.my-style.in/restaurant/index.php?i=1',
+    image: 'img/restaurant.jpg', // Replace with actual image URL
+  },
+  {
+    title: 'Restaurant Admin',
+    description: 'Restaurant Admin Panel using php, Mysql, Reactjs',
+    link: 'http://games.my-style.in/restaurant/admin/admin_f.php',
+    image: 'img/res_admin.png', // Replace with actual image URL
+  },
+  {
+    title: 'Beauty Parlour website',
+    description: 'A Beauty Parlour Website in ReactJs.',
+    link: 'https://bp123.netlify.app',
+    image: 'img/beautyparlour.jpg', // Replace with actual image URL
+  },
+   {
+    title: 'Event website',
+    description: 'A Event Website in ReactJs.',
+    link: 'https://eventnth.netlify.app',
+    image: 'img/eventnth.jpg', // Replace with actual image URL
+  },
+];
+
+const Projects = () => {
+  const navProj = React.useRef(null);
+
+  useZoomOutAnimation(navProj);
+  return (
+    <section
+      id="projects"
+      style={{
+        padding: '50px 20px',
+        background: 'linear-gradient(to right, #007BFF, #4caf50)',
+      }}
+      ref={navProj}
+    >
+      <h2>My Projects</h2>
+      <div
+        style={{
+          display: 'flex',
+          gap: '20px',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+        }}
+      >
+        {projects.map((project, index) => (
+          <div
+            className="project-card"
+            key={index}
+            style={{
+              width: 'calc(33.33% - 20px)',
+              padding: '20px',
+              borderRadius: '8px',
+              border: '1px solid #ddd',
+              background: '#b9ed8e',
+              boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+              cursor: 'pointer',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'scale(1.05)';
+              e.currentTarget.style.boxShadow =
+                '0px 6px 15px rgba(0, 0, 0, 0.2)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+              e.currentTarget.style.boxShadow =
+                '0px 4px 8px rgba(0, 0, 0, 0.1)';
+            }}
+          >
+            <img
+              src={project.image}
+              alt={`${project.title} screenshot`}
+              style={{
+                width: '100%',
+                height: 'auto',
+                borderRadius: '8px',
+                marginBottom: '15px',
+              }}
+            />
+            <h3>
+             <a
+               href={project.link}
+               target="_blank"
+               rel="noopener noreferrer"
+               style={{
+                 color: '#333',
+                 fontSize: '1.5em',
+                 fontWeight: 'bold',
+                 transition: 'color 0.3s ease',
+               }}
+             >
+                {project.title}
+               </a>
+            </h3>
+            <p>{project.description}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
+const skills = [
+  { name: 'React', percentage: 90 },
+  { name: 'PHP', percentage: 80 },
+  { name: 'MySQL', percentage: 85 },
+  { name: 'CSS', percentage: 75 },
+  { name: 'JavaScript', percentage: 95 },
+];
+
+const Skills = () => {
+    const zoSkills = React.useRef(null);
+    
+    useZoomOutAnimation(zoSkills);
+  return (
+    <section id="skills" style={{
+      padding: '50px 20px',
+      background: 'linear-gradient(to right, #007BFF, #4caf50)'
+    }} ref={zoSkills}>
+      <h2>My Skills</h2>
+      <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center' }}>
+        {skills.map((skill, index) => (
+          <div
+            key={index}
+            className="skill-circle"
+            style={{
+              background: `conic-gradient(#4caf50 ${skill.percentage}%, #ddd ${skill.percentage}%)`,
+            }}
+          >
+            <span>
+              {skill.name}
+              <br />
+              {skill.percentage}%
+            </span>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+const ContactForm = () => {
+    const zoContF = React.useRef(null);
+    
+    useZoomOutAnimation(zoContF);
+  useEffect(() => {
+    // Initialize EmailJS with your user ID
+    emailjs.init("1725YGNlFRsVi38qm");
+  }, []);
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+
+    emailjs
+      .sendForm(
+        "service_zyvyssn", // Service ID
+        "template_t8rxv4o", // Template ID
+        form
+      )
+      .then(
+        (result) => {
+          console.log("Email sent successfully:", result.text);
+          alert("Message sent successfully!");
+        },
+        (error) => {
+          console.error("Error sending email:", error);
+          alert("Failed to send message. Please try again later.");
+        }
+      );
+
+    form.reset();
+  };
+
+  return (
+    <form className="contact-form" onSubmit={sendEmail} ref={zoContF}>
+      <h2>Contact Me</h2>
+      <label>Name:</label>
+      <input type="text" name="name" placeholder="Your Name" required />
+      <label>Email:</label>
+      <input type="email" name="email" placeholder="Your Email" required />
+      <label>Message:</label>
+      <textarea
+        name="message"
+        placeholder="Write your message here..."
+        rows="5"
+        required
+      ></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  );
+};
+    
+const Contact = () => {
+    const zoCont = React.useRef(null);
+    
+    useZoomOutAnimation(zoCont);
+  return (
+    <section id="contact" className="contact-section" ref={zoCont}>
+      <h2></h2>
+      <p>Email: <a href="mailto:prabalab@gmail.com">prabalab@gmail.com</a></p>
+      <p>Feel free to reach out for collaborations or job opportunities!</p>
+    </section>
+  );
+};
+
+const Footer = () => {
+  return (
+    <footer className="footer">
+      <p>© 2025 Prabal Satpathy. All rights reserved.</p>
+    </footer>
+  );
+};
+const App = () => {
+  return (
+    <div className="container">
+      <Header />
+      <Hero />
+      <Projects />
+      <Skills />
+    <ContactForm />
+    <Contact />
+    <Footer />
+    </div>
+  );
+};
+
+ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+</html>
